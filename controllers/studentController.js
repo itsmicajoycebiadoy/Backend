@@ -1,51 +1,50 @@
 import * as studentModels from '../models/studentModels.js';
 
-export const fetchStudents = async (req, res) =>{
-    try{
-        const books = await studentModels.getStudents();
-        res.status(200).json({success: true, message: books});
-    }catch(e){
+export const fetchStudents = async (req, res) => {
+    try {
+        const students = await studentModels.getStudents();
+        res.status(200).json({ success: true, data: students });
+    } catch (e) {
         console.log(e);
         res.status(500).json({
             success: false,
             message: "Internal Server Error"
-        })
+        });
     }
-}
-
+};
 
 export const createStudent = async (req, res) => {
-    const {name, srcode, course} = req.body
-    try{
+    const { name, srcode, course } = req.body;
+    try {
         const studentId = await studentModels.insertStudent(name, srcode, course);
-        res.status(200).json({success : true, message : studentId})
-    }catch(e){
-        console.log(e)
-        res.status(500).json({success : false, message : "Internal Server Error"})
+        res.status(200).json({ success: true, data: studentId });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ success: false, message: "Internal Server Error" });
     }
-}
+};
 
 export const editStudent = async (req, res) => {
-    const {name, srcode, course} = req.body;
-    const {studentId} = req.params
+    const { name, srcode, course } = req.body;
+    const { studentId } = req.params;
 
-    try{
+    try {
         const updatedId = await studentModels.updateStudent(name, srcode, course, studentId);
-        res.status(200).json ({success : true, message : updatedId});
-    }catch(e){
+        res.status(200).json({ success: true, data: updatedId });
+    } catch (e) {
         console.log(e);
-        res.status(500).json({success : false, message : "Internal Server Error"});
+        res.status(500).json({ success: false, message: "Internal Server Error" });
     }
-}
+};
 
 export const deleteStudent = async (req, res) => {
-    const {studentId} = req.params;
+    const { studentId } = req.params;
 
-    try{
-        const deletedId = await bookModels.deleteBook(studentId);
-        res.status(200).json({success : true, message : deletedId})
-    }catch(e){
+    try {
+        const deletedId = await studentModels.deleteStudent(studentId); 
+        res.status(200).json({ success: true, data: deletedId });
+    } catch (e) {
         console.log(e);
-        res.status(500).json({success : false, message : "Internal Server Error" })
+        res.status(500).json({ success: false, message: "Internal Server Error" });
     }
-}
+};

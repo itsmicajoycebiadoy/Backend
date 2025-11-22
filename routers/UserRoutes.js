@@ -5,8 +5,10 @@ import express from 'express'
 const UserRoutes = express.Router();
 
 
-UserRoutes.post('/register', UserController.register); 
-UserRoutes.post('/login', UserController.login);        
+UserRoutes.post('/register', UserController.register);
+UserRoutes.post('/login', UserController.login);
+
+UserRoutes.use(authHandler);   
 
 
 export default UserRoutes;
